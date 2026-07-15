@@ -1,4 +1,5 @@
 import { PaginationResponse } from "@/types/api";
+import { API_BASE_URL } from "@/lib/api-base";
 
 export type UserRole = "admin" | "user";
 
@@ -12,8 +13,6 @@ export interface AppUser {
     createdAt: string;
     updatedAt: string;
 }
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 
 interface ApiEnvelope<T> {
     success: boolean;

@@ -5,7 +5,18 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 const client = new MongoClient(process.env.MONGODB_URI!);
 const db = client.db("learnify");
 
+// Replit serves this app through a public *.replit.dev domain (and, once
+// published, a *.replit.app domain) that differs from localhost. Better Auth
+// rejects requests whose Origin header isn't explicitly trusted, so include
+// those Replit-provided domains alongside localhost for local debugging.
+const replitDomains = (process.env.REPLIT_DOMAINS ?? "")
+    .split(",")
+    .map((domain) => domain.trim())
+    .filter(Boolean)
+    .flatMap((domain) => [`https://${domain}`, `https://${domain}:5000`]);
+
 export const auth = betterAuth({
+    trustedOrigins: [...replitDomains, "http://localhost:5000"],
     database: mongodbAdapter(db, {
         // Optional: if you don't provide a client, database transactions won't be enabled.
         client

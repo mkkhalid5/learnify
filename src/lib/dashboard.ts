@@ -1,6 +1,5 @@
 import { DashboardSummary } from "@/types/dashboard";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+import { API_BASE_URL } from "@/lib/api-base";
 
 interface ApiEnvelope<T> {
     success: boolean;

@@ -1,7 +1,6 @@
 import { ApiErrorResponse, PaginationResponse } from "@/types/api";
 import { Category, CategoryFormValues } from "@/types/category";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+import { API_BASE_URL } from "@/lib/api-base";
 
 interface UploadResponse {
     secure_url: string;
