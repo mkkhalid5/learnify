@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa6";
 
 import Container from "@/components/shared/container/Container";
+import { Button } from "@heroui/react";
 
 const Hero = () => {
     return (
@@ -49,12 +50,11 @@ const Hero = () => {
                                 <FaArrowRight />
                             </Link>
 
-                            <Link
-                                href="/become-instructor"
+                            <Button
                                 className="rounded-xl border px-6 py-3 font-semibold transition hover:bg-default-100"
                             >
                                 Become Instructor
-                            </Link>
+                            </Button>
                         </div>
 
                         <div className="flex flex-wrap gap-8 pt-6">

@@ -2,6 +2,7 @@
 
 import { signIn } from "@/lib/auth-client";
 import { LoginFormData, LoginErrors } from "@/types/auth";
+import { Button } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -159,12 +160,11 @@ const LoginPage = () => {
                         Remember me
                     </label>
 
-                    <Link
-                        href="/forgot-password"
+                    <Button
                         className="text-blue-600 hover:underline"
                     >
                         Forgot Password?
-                    </Link>
+                    </Button>
                 </div>
 
                 {/* Login */}
