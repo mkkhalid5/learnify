@@ -15,7 +15,6 @@ export async function proxy(request: NextRequest) {
     }
 
     const { pathname } = request.nextUrl;
-
     // Not logged in — redirect to login
     if (!session) {
         return NextResponse.redirect(new URL("/login", request.url));
