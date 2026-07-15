@@ -1,0 +1,9 @@
+
+export type Testimonial = {
+    id: number,
+    name: string,
+    designation: string,
+    image: string,
+    rating: number,
+    review: string,
+}
