@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
   // Allow the Replit preview proxy's host to connect to the dev server
   // (HMR websocket, dev asset requests) since it's served via an iframe
   // proxy on a different origin than localhost.
-  allowedDevOrigins: process.env.REPLIT_DEV_DOMAIN ? [process.env.REPLIT_DEV_DOMAIN] : [],
   images: {
     remotePatterns: [
       {
