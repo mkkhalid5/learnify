@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/backend-api/:path*",
-        destination: "http://127.0.0.1:8000/:path*",
+        destination: "https://learnify-server-phi.vercel.app:8000/:path*",
       },
     ];
   },
