@@ -8,5 +8,5 @@
 //   over the loopback interface, so we skip the rewrite there.
 export const API_BASE_URL =
     typeof window === "undefined"
-        ? (process.env.INTERNAL_API_URL ?? "http://127.0.0.1:8000")
-        : (process.env.NEXT_PUBLIC_API_URL ?? "/backend-api");
+        ? (process.env.INTERNAL_API_URL ?? "https://learnify-server-phi.vercel.app")
+        : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000");

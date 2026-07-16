@@ -1,47 +1,89 @@
 import { API_BASE_URL as BASE_URL } from "@/lib/api-base";
 
-export const dataGet = async <T>(path: string): Promise<T> => {
-    const res = await fetch(`${BASE_URL}${path}`, {
+interface ApiResponse<T> {
+    success: boolean;
+    message: string;
+    data?: T;
+    error?: unknown;
+}
+
+async function request<T>(
+    path: string,
+    options?: RequestInit,
+    expectData = true
+): Promise<T> {
+     console.log(`${BASE_URL}${path}`);
+    const response = await fetch(`${BASE_URL}${path}`, {
+        
         cache: "no-store",
+        ...options,
+        headers: {
+            ...(options?.headers ?? {}),
+            ...(options?.body instanceof FormData
+                ? {}
+                : {
+                      "Content-Type": "application/json",
+                  }),
+        },
     });
-    return res.json();
-};
-export const dataPost = async (
+    console.log(response.status);
+    const result: ApiResponse<T> = await response.json();
+
+    if (
+        !response.ok ||
+        result.success === false ||
+        (expectData && result.data === undefined)
+    ) {
+        throw new Error(result.message || "Request Failed");
+    }
+     
+    return result.data as T;
+}
+
+export const dataGet = <T>(path: string) =>
+    request<T>(path);
+
+export const dataPost = <T>(
     path: string,
     body: unknown
-) => {
-    const res = await fetch(`${BASE_URL}${path}`, {
+) =>
+    request<T>(path, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(body),
     });
 
-    return res.json();
-};
-
-export const dataPatch = async (
+export const dataPatch = <T>(
     path: string,
     body: unknown
-) => {
-    const res = await fetch(`${BASE_URL}${path}`, {
+) =>
+    request<T>(path, {
         method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(body),
     });
 
-    return res.json();
-};
+export const dataDelete = (path: string) =>
+    request<void>(
+        path,
+        {
+            method: "DELETE",
+        },
+        false
+    );
 
-export const dataDelete = async (
-    path: string
-) => {
-    const res = await fetch(`${BASE_URL}${path}`, {
-        method: "DELETE",
-    });
+export const uploadImage = async (
+    path: string,
+    file: File
+): Promise<string> => {
+    const formData = new FormData();
+    formData.append("image", file);
 
-    return res.json();
+    const result = await request<{ secure_url: string }>(
+        path,
+        {
+            method: "POST",
+            body: formData,
+        }
+    );
+
+    return result.secure_url;
 };
